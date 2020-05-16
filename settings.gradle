@@ -1,0 +1,2 @@
+rootProject.name='M3U8 Creator'
+include ':app'

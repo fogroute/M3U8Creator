@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">M3U8 Creator</string>
+
+    <string-array name="search_mode">
+        <item>All</item>
+        <item>Path</item>
+        <item>Title</item>
+    </string-array>
+</resources>
