@@ -9,18 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_main_select.*
 import java.io.*
-import java.text.FieldPosition
+
 
 class MainFragmentSelect :Fragment() {
 
-    //    var testInt = 0
     var dataset = Dataset()
     var adapter = CustomAdapter(dataset)
     val READ_REQUEST_CODE: Int = 42
@@ -69,7 +67,7 @@ class MainFragmentSelect :Fragment() {
             }
 
             //Query
-            var sortOrder : String?  = null// = MediaStore.Audio.Media.DATA
+            var sortOrder : String?  = null
             var selectionClause: String? = null
 
             when (mode){
@@ -123,9 +121,6 @@ class MainFragmentSelect :Fragment() {
                     }
                 }
             }
-
-//            var i = 0
-
         }
 
 
@@ -157,7 +152,6 @@ class MainFragmentSelect :Fragment() {
 //        dataset.add("diffuse", "/storage/3d", false) //dummy
 //        dataset.add("fundamental", "/storage/4f", false) //dummy
 
-        //var adapter = CustomAdapter(dataset)
 
         var layoutManager = LinearLayoutManager(activity)
 
@@ -181,7 +175,6 @@ class MainFragmentSelect :Fragment() {
             activity?.findViewById<Button>(R.id.buttonReset)  // view.findViewById<Button>(R.id.button)
         buttonClear?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                Toast.makeText(activity, "TO BE UPDATED: CLEAN", Toast.LENGTH_SHORT).show()
                 dataset.clear()
                 adapter.notifyDataSetChanged()
             }
@@ -212,7 +205,6 @@ class MainFragmentSelect :Fragment() {
         })
 
 
-//        var spinner : Spinner = activity?.findViewById<Spinner>(R.id.spinner)
 
         var buttonRL = activity?.findViewById<Button>(R.id.buttonRL)
         buttonRL?.setOnClickListener(object : View.OnClickListener {
@@ -231,7 +223,6 @@ class MainFragmentSelect :Fragment() {
         var buttonRF = activity?.findViewById<Button>(R.id.buttonR)
         buttonRF?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                Toast.makeText(activity, "TO BE UPDATED: READ FILE", Toast.LENGTH_SHORT).show()
                 openFileGui(READ_REQUEST_CODE)
             }
         })
@@ -247,17 +238,14 @@ class MainFragmentSelect :Fragment() {
         // Short: Save as
         // Long: Save
         var buttonOverwrite =
-            activity?.findViewById<Button>(R.id.buttonOverwrite)  // view.findViewById<Button>(R.id.button)
+            activity?.findViewById<Button>(R.id.buttonOverwrite)
         buttonOverwrite?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                Toast.makeText(activity, "TO BE UPDATED", Toast.LENGTH_SHORT).show()
                 openFileGui(WRITE_REQUEST_CODE)
             }
         })
         buttonOverwrite?.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(v: View?): Boolean {
-                // long = save
-//                Toast.makeText(activity, "Long", Toast.LENGTH_SHORT).show()
                 if (::m3u8Uri.isInitialized) {
                     writeToUri(m3u8Uri)
                     Toast.makeText(activity, "Successfully overwritten", Toast.LENGTH_SHORT).show()
@@ -287,14 +275,12 @@ class MainFragmentSelect :Fragment() {
                 }
                 if (column == 1) {
                     if (position > 0) {
-//                        Toast.makeText(activity, "GOING UP", Toast.LENGTH_SHORT).show()
                         dataset.swap(position - 1, position)
                         adapter.notifyItemRangeChanged(position - 1, 2)
                     }
                 }
                 if (column == 2) {
                     if (position < dataset.size - 1) {
-                        //Toast.makeText(activity, "GOING DOWN", Toast.LENGTH_SHORT).show()
                         dataset.swap(position, position + 1)
                         adapter.notifyItemRangeChanged(position, 2)
                     }
@@ -310,7 +296,6 @@ class MainFragmentSelect :Fragment() {
                 column: Int
             ) {
                 if (column == 0) {
-                    //
                     Toast.makeText(activity, "${dataset.path[position]}", Toast.LENGTH_SHORT).show()
                 }
 
@@ -322,19 +307,17 @@ class MainFragmentSelect :Fragment() {
                     //var range = toPosition - fromPosition
                     var valid : Boolean = false
                     if (column == 1 ){
-//                        fromPosition = position
                         toPosition = position - step
-                        positionStart = toPosition
                         if(toPosition >= 0){
                             valid = true
+                            positionStart = toPosition
                         }
                     }
                     else {
-//                        fromPosition
                         toPosition = position + step
-                        positionStart = fromPosition
                         if(toPosition < dataset.size){
                             valid = true
+                            positionStart = fromPosition
                         }
                     }
 
@@ -345,15 +328,11 @@ class MainFragmentSelect :Fragment() {
                         dataset.removeAt(fromPosition)
                         dataset.add(toPosition, title, path, selected)
                         adapter.notifyItemRangeChanged(positionStart,step+1)
-
-//                        adapter.notifyItemMoved(position, position-step)
                     }
                     else {
                         //Toast.makeText(activity, "OoB", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-
             }
         })
 
@@ -395,7 +374,6 @@ class MainFragmentSelect :Fragment() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data.also { uri ->

@@ -31,7 +31,7 @@ data class Dataset (
             val tempSelected = selected[i]
             title[i] = title[j]
             path[i] = path[j]
-            selected[i] = selected[i]
+            selected[i] = selected[j]
             title[j] = tempTitle
             path[j] = tempPath
             selected[j] = tempSelected

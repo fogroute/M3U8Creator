@@ -37,13 +37,15 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
 
         holder.view.checkedTextView.text = dataset.title[position]
         if (dataset.selected[position]) {
-            holder.view.checkedTextView.setBackgroundColor(Color.YELLOW)
+            holder.view.LinearLayout.setBackgroundColor(Color.YELLOW)
+            //holder.view.checkedTextView.setBackgroundColor(Color.YELLOW)
         }
-        else{
-            holder.view.checkedTextView.setBackgroundColor(Color.TRANSPARENT)
+        else {
+            holder.view.LinearLayout.setBackgroundColor(Color.TRANSPARENT)
+            //holder.view.checkedTextView.setBackgroundColor(Color.TRANSPARENT)
         }
 
-        // タップしたとき
+        // short
         holder.view.setOnClickListener {
             listener.onItemClickListener(it, position, dataset.title[position], 0)
         }
@@ -57,7 +59,7 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
         }
 
 
-
+        // long
         holder.view.setOnLongClickListener{it
             longClickListerner.onItemLongClickListener(it, position, 0)
             true
