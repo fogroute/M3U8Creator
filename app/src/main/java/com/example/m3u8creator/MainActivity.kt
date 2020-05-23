@@ -22,15 +22,11 @@ class MainActivity : AppCompatActivity() {
         container.adapter = TabAdapter(supportFragmentManager, this)
         tabLayout.setupWithViewPager(container)
 
-
-
         fun isExternalStorageWritable(): Boolean {
             return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
         }
-        //val textView = findViewById(R.id.textViewStat) as TextView
 
         fun requestWritePermission() {
-            //textView.append("Write Requested\n")
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1024)
             } else {

@@ -6,12 +6,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Dataset (
     var size: Int = 0,
+    var count: Int = 0,
     var title: ArrayList<String> = arrayListOf(),
     var path: ArrayList<String> = arrayListOf(),
     var selected: ArrayList<Boolean> = arrayListOf()
 ) : Parcelable {
     fun clear(){
         size = 0
+        count = 0
         title = arrayListOf()
         path = arrayListOf()
         selected = arrayListOf()
@@ -19,9 +21,17 @@ data class Dataset (
 
     fun add(newTitle:String, newPath : String, newSelected:Boolean) {
         size += 1
+        count = if (newSelected) count+1 else count
         title.add(newTitle)
         path.add(newPath)
         selected.add(newSelected)
+    }
+    fun add(i: Int, newTitle:String, newPath : String, newSelected:Boolean){
+        size += 1
+        count = if (newSelected) count+1 else count
+        title.add(i, newTitle)
+        path.add(i, newPath)
+        selected.add(i, newSelected)
     }
 
     fun swap(i:Int, j:Int) {
@@ -40,17 +50,12 @@ data class Dataset (
 
     fun removeAt(i: Int){
         size -= 1
+        count = if (selected[i]) count-1 else count
         title.removeAt(i)
         path.removeAt(i)
         selected.removeAt(i)
     }
-    fun add(i: Int, newTitle:String, newPath : String, newSelected:Boolean){
-        size += 1
-        title.add(i, newTitle)
-        path.add(i, newPath)
-        selected.add(i, newSelected)
 
-    }
 
 
     fun removeUnused(){
@@ -62,17 +67,20 @@ data class Dataset (
                 selected.removeAt(i)
             }
         }
+        count = size
     }
 
     fun selectAll (selectedAll : Boolean){
         for (i in 0..size - 1) {
             selected[i] = selectedAll
         }
+        count = if (selectedAll) size else 0
     }
 
     fun invertSelectionStatus(){
         for (i in 0..size - 1) {
             selected[i] = !selected[i]
         }
+        count = size - count
     }
 }

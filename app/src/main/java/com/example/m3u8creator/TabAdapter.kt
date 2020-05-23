@@ -1,6 +1,7 @@
 package com.example.m3u8creator
 
 import android.content.Context
+import android.provider.Settings.Global.getString
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -16,7 +17,7 @@ class TabAdapter(fm: FragmentManager, private val context: Context): FragmentPag
 
     override fun getPageTitle(position: Int): CharSequence? {
         when(position){
-            0 -> { return "COMMAND" }
+            0 -> { return "Command" }
             else -> { return "LIST" }
 
         }

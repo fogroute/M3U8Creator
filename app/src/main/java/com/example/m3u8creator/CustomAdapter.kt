@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-//// customListはrecyclerViewのコンテンツとしてに表示するString配列のデータ
 class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.CustomViewHolder>(){
 
-    // リスナー格納変数
-    lateinit var listener: OnItemClickListener
+    lateinit var clickListener: OnItemClickListener
     lateinit var longClickListerner : OnItemLongClickListener
 
     //VuewHolder
@@ -47,15 +45,15 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
 
         // short
         holder.view.setOnClickListener {
-            listener.onItemClickListener(it, position, dataset.title[position], 0)
+            clickListener.onItemClickListener(it, position, dataset.title[position], 0)
         }
 
         holder.view.buttonUp.setOnClickListener {
-            listener.onItemClickListener(it, position, dataset.title[position], 1)
+            clickListener.onItemClickListener(it, position, dataset.title[position], 1)
         }
 
         holder.view.buttonDown.setOnClickListener {
-            listener.onItemClickListener(it, position, dataset.title[position], 2)
+            clickListener.onItemClickListener(it, position, dataset.title[position], 2)
         }
 
 
@@ -89,7 +87,7 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
 
     // Listener
     fun setOnItemClickListener(listener: OnItemClickListener){
-        this.listener = listener
+        this.clickListener = listener
     }
     fun setOnItemLongClickListerner(listener: OnItemLongClickListener){
         this.longClickListerner = listener

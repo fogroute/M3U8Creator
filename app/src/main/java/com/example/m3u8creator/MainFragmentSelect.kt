@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.textfield.TextInputEditText
@@ -105,8 +106,7 @@ class MainFragmentSelect :Fragment() {
                     Toast.makeText(activity, "NOT FOUND", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    Toast.makeText(activity, "${cursor?.count} Files", Toast.LENGTH_SHORT).show()
-
+                    toastFileCount(cursor?.count)
                     if (cursor != null && cursor.moveToFirst()) {
                         do {
                             val strTitle =
@@ -168,6 +168,7 @@ class MainFragmentSelect :Fragment() {
             override fun onClick(v: View?) {
                 dataset.removeUnused()
                 adapter.notifyDataSetChanged()
+                toastSelectStatus(dataset.count, dataset.size)
             }
         })
 
@@ -185,12 +186,14 @@ class MainFragmentSelect :Fragment() {
             override fun onClick(v: View?) {
                 dataset.selectAll(true)
                 adapter.notifyDataSetChanged()
+                toastSelectStatus(dataset.count, dataset.size)
             }
         })
         buttonAll?.setOnLongClickListener(object : View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
                 dataset.invertSelectionStatus()
                 adapter.notifyDataSetChanged()
+                toastSelectStatus(dataset.count, dataset.size)
                 return true
             }
         })
@@ -201,6 +204,7 @@ class MainFragmentSelect :Fragment() {
             override fun onClick(v: View?) {
                 dataset.selectAll(false)
                 adapter.notifyDataSetChanged()
+                toastSelectStatus(dataset.count, dataset.size)
             }
         })
 
@@ -209,7 +213,7 @@ class MainFragmentSelect :Fragment() {
         var buttonRL = activity?.findViewById<Button>(R.id.buttonRL)
         buttonRL?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                Toast.makeText(activity, "TO BE UPDATED", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(activity, "TO BE UPDATED", Toast.LENGTH_SHORT).show()
                 getFileList2(SEARCH_PATH)
             }
         })
@@ -272,6 +276,7 @@ class MainFragmentSelect :Fragment() {
                     var selected = !dataset.selected[position]
                     adapter.notifyItemChanged(position)
                     dataset.selected[position] = selected
+                    dataset.count = if (selected) dataset.count+1 else dataset.count-1
                 }
                 if (column == 1) {
                     if (position > 0) {
@@ -375,12 +380,18 @@ class MainFragmentSelect :Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
+//        var button = activity?.findViewById<Button>(R.id.button)
+
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data.also { uri ->
                 if (uri != null) {
+                    val size0 = dataset.size
                     m3u8Uri = uri
                     readFromUri(m3u8Uri)
                     adapter.notifyDataSetChanged()
+                    val sizeDiff = dataset.size - size0
+                    toastFileCount(sizeDiff)
+                    //button?.setText(uri.path.toString())
                 }
             }
         }
@@ -397,5 +408,18 @@ class MainFragmentSelect :Fragment() {
         if (requestCode == WRITE_REQUEST_CODE && resultCode != Activity.RESULT_OK) {
             Toast.makeText(activity, "Canceled or Failed", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun toastFileCount(count: Int){
+        if (count < 2) {
+            Toast.makeText(activity, "${count} File", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            Toast.makeText(activity, "${count} Files", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun toastSelectStatus(count: Int, size: Int){
+        Toast.makeText(activity, "${count}/${size}", Toast.LENGTH_SHORT).show()
     }
 }
