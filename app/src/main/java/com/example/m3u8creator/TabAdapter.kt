@@ -17,9 +17,12 @@ class TabAdapter(fm: FragmentManager, private val context: Context): FragmentPag
 
     override fun getPageTitle(position: Int): CharSequence? {
         when(position){
-            0 -> { return "Command" }
-            else -> { return "LIST" }
-
+            0 -> {
+                return context.resources.getString(R.string.tab_Read)
+            }
+            else -> {
+                return context.resources.getString(R.string.tab_Select)
+            }
         }
     }
 

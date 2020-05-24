@@ -20,6 +20,8 @@ class MainFragmentRead : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        /*
         val button = activity?.findViewById<Button>(R.id.button)
         button?.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(v: View?): Boolean {
@@ -27,5 +29,6 @@ class MainFragmentRead : Fragment() {
                 return true
             }
         })
+        */
     }
 }

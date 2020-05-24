@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.activity_main_read.*
 import kotlinx.android.synthetic.main.activity_main_select.*
 import java.io.*
 
@@ -22,13 +22,15 @@ class MainFragmentSelect :Fragment() {
 
     var dataset = Dataset()
     var adapter = CustomAdapter(dataset)
-    val READ_REQUEST_CODE: Int = 42
-    val WRITE_REQUEST_CODE: Int = 44
+    val readRequestCode: Int = Constant.READ_REQUEST_CODE
+    val writeRequestCode: Int = Constant.WRITE_REQUEST_CODE
     lateinit var m3u8Uri: Uri
 
-    val SEARCH_ALL : Int = 0
-    val SEARCH_TITLE : Int = 1
-    val SEARCH_PATH : Int = 2
+    val searchAll : Int = Constant.SEARCH_ALL
+    val searchTitle : Int = Constant.SEARCH_TITLE
+    val searchPath : Int = Constant.SEARCH_PATH
+
+    var overwriteString = "Overwrite "
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,15 +74,15 @@ class MainFragmentSelect :Fragment() {
             var selectionClause: String? = null
 
             when (mode){
-                SEARCH_ALL -> {
+                searchAll -> {
                     selectionClause = null
                     sortOrder = null
                 }
-                SEARCH_PATH -> {
+                searchPath -> {
                     selectionClause = "${MediaStore.Audio.Media.DATA} GLOB ?"
                     sortOrder = MediaStore.Audio.Media.DATA
                 }
-                SEARCH_TITLE -> {
+                searchTitle -> {
                     selectionClause = "${MediaStore.Audio.Media.TITLE} GLOB ?"
                     sortOrder = MediaStore.Audio.Media.TITLE
 
@@ -106,7 +108,7 @@ class MainFragmentSelect :Fragment() {
                     Toast.makeText(activity, "NOT FOUND", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    toastFileCount(cursor?.count)
+                    toastFileCount(cursor.count)
                     if (cursor != null && cursor.moveToFirst()) {
                         do {
                             val strTitle =
@@ -125,23 +127,23 @@ class MainFragmentSelect :Fragment() {
 
 
         fun openFileGui(requestCode: Int) {
-            if (requestCode == READ_REQUEST_CODE) {
+            if (requestCode == readRequestCode) {
                 val intent = Intent(
                     Intent.ACTION_OPEN_DOCUMENT
                 ).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
                     type = "*/*"
                 }
-                startActivityForResult(intent, READ_REQUEST_CODE)
+                startActivityForResult(intent, readRequestCode)
             }
-            if (requestCode == WRITE_REQUEST_CODE) {
+            if (requestCode == writeRequestCode) {
                 val intent = Intent(
                     Intent.ACTION_CREATE_DOCUMENT
                 ).apply {
 //                    addCategory(Intent.CATEGORY_OPENABLE)
                     type = "*/*"
                 }
-                startActivityForResult(intent, WRITE_REQUEST_CODE)
+                startActivityForResult(intent, writeRequestCode)
             }
 
         }
@@ -153,7 +155,7 @@ class MainFragmentSelect :Fragment() {
 //        dataset.add("fundamental", "/storage/4f", false) //dummy
 
 
-        var layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
 
         simpleRecyclerView.layoutManager = layoutManager
         simpleRecyclerView.adapter = adapter
@@ -163,7 +165,7 @@ class MainFragmentSelect :Fragment() {
 
 
         //4 commands
-        var buttonC = activity?.findViewById<Button>(R.id.buttonC)
+        val buttonC = activity?.findViewById<Button>(R.id.buttonC)
         buttonC?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 dataset.removeUnused()
@@ -172,16 +174,19 @@ class MainFragmentSelect :Fragment() {
             }
         })
 
-        var buttonClear =
+        val buttonClear =
             activity?.findViewById<Button>(R.id.buttonReset)  // view.findViewById<Button>(R.id.button)
         buttonClear?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 dataset.clear()
                 adapter.notifyDataSetChanged()
+                val textInputEditText = activity?.findViewById<TextInputEditText>(R.id.textInputEditText)
+                textInputEditText?.setText("")
+                toastSelectStatus(dataset.count, dataset.size)
             }
         })
 
-        var buttonAll = activity?.findViewById<Button>(R.id.buttonAll)
+        val buttonAll = activity?.findViewById<Button>(R.id.buttonAll)
         buttonAll?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 dataset.selectAll(true)
@@ -198,7 +203,7 @@ class MainFragmentSelect :Fragment() {
             }
         })
 
-        var buttonZero =
+        val buttonZero =
             activity?.findViewById<Button>(R.id.buttonZero)  // view.findViewById<Button>(R.id.button)
         buttonZero?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -210,24 +215,24 @@ class MainFragmentSelect :Fragment() {
 
 
 
-        var buttonRL = activity?.findViewById<Button>(R.id.buttonRL)
+        val buttonRL = activity?.findViewById<Button>(R.id.buttonRL)
         buttonRL?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 //                Toast.makeText(activity, "TO BE UPDATED", Toast.LENGTH_SHORT).show()
-                getFileList2(SEARCH_PATH)
+                getFileList2(searchPath)
             }
         })
         buttonRL?.setOnLongClickListener(object : View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
-                getFileList2(SEARCH_TITLE)
+                getFileList2(searchTitle)
                 return true
             }
         })
 
-        var buttonRF = activity?.findViewById<Button>(R.id.buttonR)
+        val buttonRF = activity?.findViewById<Button>(R.id.buttonR)
         buttonRF?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                openFileGui(READ_REQUEST_CODE)
+                openFileGui(readRequestCode)
             }
         })
         buttonRF?.setOnLongClickListener(object : View.OnLongClickListener{
@@ -241,11 +246,19 @@ class MainFragmentSelect :Fragment() {
 
         // Short: Save as
         // Long: Save
-        var buttonOverwrite =
-            activity?.findViewById<Button>(R.id.buttonOverwrite)
+        val buttonWrite =
+            activity?.findViewById<Button>(R.id.buttonW)
+        buttonWrite?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                openFileGui(writeRequestCode)
+            }
+        })
+
+        val buttonOverwrite =
+            activity?.findViewById<Button>(R.id.buttonOW)
         buttonOverwrite?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                openFileGui(WRITE_REQUEST_CODE)
+                Toast.makeText(activity, "Long Tap Required", Toast.LENGTH_SHORT).show()
             }
         })
         buttonOverwrite?.setOnLongClickListener(object : View.OnLongClickListener {
@@ -300,18 +313,18 @@ class MainFragmentSelect :Fragment() {
                 position: Int,
                 column: Int
             ) {
-                if (column == 0) {
+                if (column == Constant.COLUMN_TV) {
                     Toast.makeText(activity, "${dataset.path[position]}", Toast.LENGTH_SHORT).show()
                 }
 
-                if (column == 1 || column == 2) {
+                if (column == Constant.COLUMN_BOTTON_UP || column == Constant.COLUMN_BOTTON_DOWN) {
                     var fromPosition: Int = position
                     var toPosition: Int = 0
                     var positionStart = position
                     val step = 8 // ?????
                     //var range = toPosition - fromPosition
-                    var valid : Boolean = false
-                    if (column == 1 ){
+                    var valid  = false
+                    if (column == Constant.COLUMN_BOTTON_UP ){
                         toPosition = position - step
                         if(toPosition >= 0){
                             valid = true
@@ -334,10 +347,43 @@ class MainFragmentSelect :Fragment() {
                         dataset.add(toPosition, title, path, selected)
                         adapter.notifyItemRangeChanged(positionStart,step+1)
                     }
-                    else {
+                    //else {
                         //Toast.makeText(activity, "OoB", Toast.LENGTH_SHORT).show()
-                    }
+                    //}
                 }
+            }
+        })
+
+        // JOKE
+        var monadMode = false
+        buttonWrite?.setOnLongClickListener(object : View.OnLongClickListener {
+            override fun onLongClick(v: View?): Boolean {
+                monadMode = !monadMode
+                if (monadMode){
+                    //Toast.makeText(context, "Monad Mode: ON", Toast.LENGTH_SHORT).show()
+                    buttonRL?.setText("探")
+                    buttonRF?.setText("読")
+                    buttonAll?.setText("選")
+                    buttonZero?.setText("解")
+                    buttonC?.setText("減")
+                    buttonClear?.setText("消")
+                    buttonWrite?.setText("創")
+                    buttonOverwrite?.setText("書")
+                    overwriteString="書 "
+                }
+                else{
+                    //Toast.makeText(context, "Monad Mode: OFF", Toast.LENGTH_SHORT).show()
+                    buttonRL?.setText("Search")
+                    buttonRF?.setText("Read File")
+                    buttonAll?.setText("All")
+                    buttonZero?.setText("None")
+                    buttonC?.setText("Select")
+                    buttonClear?.setText("Reset")
+                    buttonWrite?.setText("New File")
+                    buttonOverwrite?.setText("Overwrite")
+                    overwriteString = "Overwrite "
+                }
+                return true
             }
         })
 
@@ -351,7 +397,8 @@ class MainFragmentSelect :Fragment() {
         bufferedReader.forEachLine {
             if (it.isNotBlank()) {
                 if (it != "#EXTM3U" && it != "#EXTINF:,") {
-                    val title = it.replace("^.*/".toRegex(), "")
+                    //val title = it.replace("^.*/".toRegex(), "")
+                    val title = basename(it)
                     dataset.add(title, it, true)
                 }
             }
@@ -380,9 +427,9 @@ class MainFragmentSelect :Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-//        var button = activity?.findViewById<Button>(R.id.button)
+        val button = activity?.findViewById<Button>(R.id.buttonOW)
 
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == readRequestCode && resultCode == Activity.RESULT_OK) {
             data?.data.also { uri ->
                 if (uri != null) {
                     val size0 = dataset.size
@@ -391,21 +438,26 @@ class MainFragmentSelect :Fragment() {
                     adapter.notifyDataSetChanged()
                     val sizeDiff = dataset.size - size0
                     toastFileCount(sizeDiff)
-                    //button?.setText(uri.path.toString())
+
+                    val fileName = basename(uri.path.toString())
+                    button?.setText(overwriteString+"${fileName}")
                 }
             }
         }
 
-        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == writeRequestCode && resultCode == Activity.RESULT_OK) {
             data?.data.also { uri ->
                 if (uri != null) {
                     m3u8Uri = uri
                     writeToUri(m3u8Uri)
                     Toast.makeText(activity, "Successfully made new file", Toast.LENGTH_SHORT).show()
+
+                    val fileName = basename(uri.path.toString())
+                    button?.setText(overwriteString+"${fileName}")
                 }
             }
         }
-        if (requestCode == WRITE_REQUEST_CODE && resultCode != Activity.RESULT_OK) {
+        if (requestCode == writeRequestCode && resultCode != Activity.RESULT_OK) {
             Toast.makeText(activity, "Canceled or Failed", Toast.LENGTH_SHORT).show()
         }
     }
@@ -422,4 +474,9 @@ class MainFragmentSelect :Fragment() {
     private fun toastSelectStatus(count: Int, size: Int){
         Toast.makeText(activity, "${count}/${size}", Toast.LENGTH_SHORT).show()
     }
+}
+
+fun basename(path: String): String{
+    val base = path.replace("^.*/".toRegex(), "")
+    return base
 }

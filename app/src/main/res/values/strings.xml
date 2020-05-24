@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">M3U8 Creator</string>
-    <string name="app_version">1.1.0</string>
+    <string name="app_version">1.2.0</string>
+
+    <string name="button_RL">Search</string>
+    <string name="button_R">Read File</string>
+    <string name="button_All">All</string>
+    <string name="button_Zero">None</string>
+    <string name="button_C">Select</string>
+    <string name="button_Reset">Reset</string>
+    <string name="button_W">New File</string>
+    <string name="button_OW">Overwrite</string>
+
+    <string name="tab_Read">Command</string>
+    <string name="tab_Select">List</string>
 
     <string-array name="search_mode">
         <item>All</item>

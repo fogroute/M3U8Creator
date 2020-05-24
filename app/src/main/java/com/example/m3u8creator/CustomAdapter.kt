@@ -45,31 +45,31 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
 
         // short
         holder.view.setOnClickListener {
-            clickListener.onItemClickListener(it, position, dataset.title[position], 0)
+            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_TV)
         }
 
         holder.view.buttonUp.setOnClickListener {
-            clickListener.onItemClickListener(it, position, dataset.title[position], 1)
+            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_BOTTON_UP)
         }
 
         holder.view.buttonDown.setOnClickListener {
-            clickListener.onItemClickListener(it, position, dataset.title[position], 2)
+            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_BOTTON_DOWN)
         }
 
 
         // long
-        holder.view.setOnLongClickListener{it
-            longClickListerner.onItemLongClickListener(it, position, 0)
+        holder.view.setOnLongClickListener{
+            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_TV)
             true
         }
 
-        holder.view.buttonUp.setOnLongClickListener { it
-            longClickListerner.onItemLongClickListener(it, position, 1)
+        holder.view.buttonUp.setOnLongClickListener {
+            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_BOTTON_UP)
             true
         }
 
         holder.view.buttonDown.setOnLongClickListener{
-            longClickListerner.onItemLongClickListener(it, position, 2)
+            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_BOTTON_DOWN)
             true
         }
 

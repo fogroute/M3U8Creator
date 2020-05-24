@@ -33,12 +33,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="READ" />
+                android:text="@string/tab_Read" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EDIT" />
+                android:text="@string/tab_Select" />
 
         </com.google.android.material.tabs.TabLayout>
 
