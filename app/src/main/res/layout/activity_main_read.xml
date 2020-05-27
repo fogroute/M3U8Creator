@@ -9,57 +9,45 @@
         android:id="@+id/buttonRL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="@string/button_RL"
-        app:layout_constraintEnd_toStartOf="@+id/space2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInput"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/space2"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInput" />
 
     <Button
         android:id="@+id/buttonR"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/button_R"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/space2"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInput"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/buttonC"
+        app:layout_constraintStart_toStartOf="@+id/buttonC"
+        app:layout_constraintTop_toBottomOf="@+id/buttonC" />
 
     <Button
         android:id="@+id/buttonC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="16dp"
-
+        android:layout_marginTop="24dp"
         android:text="@string/button_C"
-        app:layout_constraintEnd_toEndOf="@+id/buttonAll"
-        app:layout_constraintStart_toStartOf="@+id/buttonAll"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAll"
-        android:textAllCaps="false"/>
-
-    <Button
-        android:id="@+id/buttonAll"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/button_All"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/buttonRL"
         app:layout_constraintStart_toStartOf="@+id/buttonRL"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRL"
-        android:textAllCaps="false"/>
+        app:layout_constraintTop_toBottomOf="@+id/buttonRL" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,37 +61,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/buttonZero"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/button_Zero"
-        app:layout_constraintEnd_toEndOf="@+id/buttonR"
-        app:layout_constraintStart_toStartOf="@+id/buttonR"
-        app:layout_constraintTop_toBottomOf="@+id/buttonR"
-        android:textAllCaps="false"/>
-
-    <Button
         android:id="@+id/buttonW"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/button_W"
-        app:layout_constraintEnd_toEndOf="@+id/buttonReset"
-        app:layout_constraintStart_toStartOf="@+id/buttonC"
-        app:layout_constraintTop_toBottomOf="@+id/buttonC"
-        android:textAllCaps="false"/>
-
-    <Button
-        android:id="@+id/buttonReset"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/button_Reset"
-        app:layout_constraintEnd_toEndOf="@+id/buttonZero"
-        app:layout_constraintStart_toStartOf="@+id/buttonZero"
-        app:layout_constraintTop_toBottomOf="@+id/buttonZero"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonR"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSelect"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSelect"
+        app:layout_constraintTop_toTopOf="@+id/buttonR" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutInput"
@@ -119,12 +85,12 @@
         android:id="@+id/buttonOW"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/button_OW"
-        app:layout_constraintEnd_toEndOf="@+id/buttonW"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/buttonR"
         app:layout_constraintStart_toStartOf="@+id/buttonW"
-        app:layout_constraintTop_toBottomOf="@+id/buttonW"
-        android:textAllCaps="false"/>
+        app:layout_constraintTop_toBottomOf="@+id/buttonW" />
 
     <Space
         android:id="@+id/space2"
@@ -134,6 +100,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutInput" />
+
+    <Spinner
+        android:id="@+id/spinnerSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonRL"
+        app:layout_constraintEnd_toStartOf="@+id/space2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonRL" />
+
+    <Spinner
+        android:id="@+id/spinnerSelect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonC"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSearch"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSearch"
+        app:layout_constraintTop_toTopOf="@+id/buttonC" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

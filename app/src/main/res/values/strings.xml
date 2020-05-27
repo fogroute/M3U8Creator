@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">M3U8 Creator</string>
-    <string name="app_version">1.2.0</string>
+    <string name="app_version">2.0.0</string>
 
     <string name="button_RL">Search</string>
     <string name="button_R">Read File</string>
-    <string name="button_All">All</string>
-    <string name="button_Zero">None</string>
-    <string name="button_C">Select</string>
-    <string name="button_Reset">Reset</string>
+    <string name="button_C">Edit</string>
     <string name="button_W">New File</string>
     <string name="button_OW">Overwrite</string>
 
@@ -15,8 +12,24 @@
     <string name="tab_Select">List</string>
 
     <string-array name="search_mode">
-        <item>All</item>
         <item>Path</item>
         <item>Title</item>
     </string-array>
+
+    <string-array name="selection_mode">
+        <item>Reduce</item>
+        <item>Select All</item>
+        <item>Select None</item>
+        <item>Invert</item>
+        <item>Reset</item>
+    </string-array>
+    <!--
+    <string-array name="selection_mode">
+        <item>n/n</item>
+        <item>N/N</item>
+        <item>0/N</item>
+        <item>(N-n)/N</item>
+    </string-array>
+    -->
+
 </resources>

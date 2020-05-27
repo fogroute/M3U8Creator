@@ -3,11 +3,13 @@ package com.example.m3u8creator
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 //
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         container.adapter = TabAdapter(supportFragmentManager, this)
         tabLayout.setupWithViewPager(container)
+        tabLayout?.setSelectedTabIndicatorColor(Color.GRAY)
 
         fun isExternalStorageWritable(): Boolean {
             return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED

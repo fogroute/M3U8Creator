@@ -34,13 +34,22 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
         holder.view.checkedTextView.text = dataset.title[position]
-        if (dataset.selected[position]) {
-            holder.view.LinearLayout.setBackgroundColor(Color.YELLOW)
-            //holder.view.checkedTextView.setBackgroundColor(Color.YELLOW)
+
+        if (!dataset.rapidMode) {
+            if (dataset.selected[position]) {
+                holder.view.LinearLayout.setBackgroundColor(Color.YELLOW)
+            }
+             else {
+                holder.view.LinearLayout.setBackgroundColor(Color.TRANSPARENT)
+            }
         }
-        else {
-            holder.view.LinearLayout.setBackgroundColor(Color.TRANSPARENT)
-            //holder.view.checkedTextView.setBackgroundColor(Color.TRANSPARENT)
+         else{
+            if (dataset.rapidSelected[position]) {
+                holder.view.LinearLayout.setBackgroundColor(Color.CYAN)
+            }
+            else {
+                holder.view.LinearLayout.setBackgroundColor(Color.TRANSPARENT)
+            }
         }
 
         // short
@@ -49,11 +58,11 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
         }
 
         holder.view.buttonUp.setOnClickListener {
-            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_BOTTON_UP)
+            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_BUTTON_UP)
         }
 
         holder.view.buttonDown.setOnClickListener {
-            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_BOTTON_DOWN)
+            clickListener.onItemClickListener(it, position, dataset.title[position], Constant.COLUMN_BUTTON_DOWN)
         }
 
 
@@ -64,12 +73,12 @@ class CustomAdapter(var dataset: Dataset) : RecyclerView.Adapter<CustomAdapter.C
         }
 
         holder.view.buttonUp.setOnLongClickListener {
-            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_BOTTON_UP)
+            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_BUTTON_UP)
             true
         }
 
         holder.view.buttonDown.setOnLongClickListener{
-            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_BOTTON_DOWN)
+            longClickListerner.onItemLongClickListener(it, position, Constant.COLUMN_BUTTON_DOWN)
             true
         }
 
