@@ -413,21 +413,21 @@ class MainFragmentSelect :Fragment() {
                 monadMode = !monadMode
                 if (monadMode){
                     //Toast.makeText(context, "Monad Mode: ON", Toast.LENGTH_SHORT).show()
-                    buttonRL?.setText("探")
-                    buttonRF?.setText("読")
-                    buttonC?.setText("選")
-                    buttonWrite?.setText("創")
-                    buttonOverwrite?.setText("書")
-                    overwriteString="書 "
+                    buttonRL?.setText(resources.getString(R.string.mm_button_RL))
+                    buttonRF?.setText(resources.getString(R.string.mm_button_R))
+                    buttonC?.setText(resources.getString(R.string.mm_button_C))
+                    buttonWrite?.setText(resources.getString(R.string.mm_button_W))
+                    buttonOverwrite?.setText(resources.getString(R.string.mm_button_OW))
+                    overwriteString=resources.getString(R.string.mm_button_OW) + " "
                 }
                 else{
                     //Toast.makeText(context, "Monad Mode: OFF", Toast.LENGTH_SHORT).show()
-                    buttonRL?.setText("Search")
-                    buttonRF?.setText("Read File")
-                    buttonC?.setText("Select")
-                    buttonWrite?.setText("New File")
-                    buttonOverwrite?.setText("Overwrite")
-                    overwriteString = "Overwrite "
+                    buttonRL?.setText(resources.getString(R.string.button_RL))
+                    buttonRF?.setText(resources.getString(R.string.button_R))
+                    buttonC?.setText(resources.getString(R.string.button_C))
+                    buttonWrite?.setText(resources.getString(R.string.button_W))
+                    buttonOverwrite?.setText(resources.getString(R.string.button_OW))
+                    overwriteString=resources.getString(R.string.button_OW) + " "
                 }
                 return true
             }

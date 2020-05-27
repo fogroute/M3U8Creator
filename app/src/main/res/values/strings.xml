@@ -8,6 +8,13 @@
     <string name="button_W">New File</string>
     <string name="button_OW">Overwrite</string>
 
+    <string name="mm_button_RL">探</string>
+    <string name="mm_button_R">読</string>
+    <string name="mm_button_C">操</string>
+    <string name="mm_button_W">創</string>
+    <string name="mm_button_OW">書</string>
+
+
     <string name="tab_Read">Command</string>
     <string name="tab_Select">List</string>
 
@@ -23,13 +30,5 @@
         <item>Invert</item>
         <item>Reset</item>
     </string-array>
-    <!--
-    <string-array name="selection_mode">
-        <item>n/n</item>
-        <item>N/N</item>
-        <item>0/N</item>
-        <item>(N-n)/N</item>
-    </string-array>
-    -->
 
 </resources>
