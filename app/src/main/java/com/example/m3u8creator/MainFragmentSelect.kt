@@ -29,10 +29,6 @@ class MainFragmentSelect :Fragment() {
     val writeRequestCode: Int = Constant.WRITE_REQUEST_CODE
     lateinit var m3u8Uri: Uri
 
-    val searchAll : Int = Constant.SEARCH_ALL
-    val searchTitle : Int = Constant.SEARCH_TITLE
-    val searchPath : Int = Constant.SEARCH_PATH
-
     var overwriteString = "Overwrite "
     var selectedDefault = false
 
@@ -362,10 +358,12 @@ class MainFragmentSelect :Fragment() {
 
                     if(dataset.rapidMode && dataset.rapidModeCount > 1 && dataset.rapidSelected[position]){
                         if (column == Constant.COLUMN_BUTTON_UP) {
-                            dataset.concentrateUpward()
+                            val nextPosition = dataset.concentrateUpward()
+                            (simpleRecyclerView.layoutManager as LinearLayoutManager).scrollToPosition(nextPosition)
                         }
                         else{
-                            dataset.concentrateDownward()
+                            val nextPosition = dataset.concentrateDownward()
+                            (simpleRecyclerView.layoutManager as LinearLayoutManager).scrollToPosition(nextPosition)
                         }
                         adapter.notifyDataSetChanged()
                         Toast.makeText(activity, "Concentrated", Toast.LENGTH_SHORT).show()

@@ -82,7 +82,8 @@ data class Dataset (
         }
     }
 
-    fun concentrateUpward(){
+    fun concentrateUpward():Int{
+        var firstPosition = 0
         var nextPosition = 0
         var first = true
         for (i in 0 .. size-1){
@@ -90,6 +91,7 @@ data class Dataset (
                 rapidSelected[i] = false
                 if (first) {
                     first = false
+                    firstPosition = i
                     nextPosition = i+1
                 }
                 else{
@@ -99,9 +101,11 @@ data class Dataset (
             }
         }
         rapidModeCount = 0
+        return firstPosition
     }
 
-    fun concentrateDownward(){
+    fun concentrateDownward():Int{
+        var firstPosition = 0
         var nextPosition = size-1
         var first = true
         for (i in size-1 downTo 0){
@@ -109,6 +113,7 @@ data class Dataset (
                 rapidSelected[i] = false
                 if (first) {
                     first = false
+                    firstPosition = i
                     nextPosition = i-1
                 }
                 else{
@@ -118,6 +123,7 @@ data class Dataset (
             }
         }
         rapidModeCount = 0
+        return firstPosition
     }
 
     fun removeUnused(){
