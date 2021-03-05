@@ -21,6 +21,8 @@
     <string-array name="search_mode">
         <item>Path</item>
         <item>Title</item>
+        <item>Path (CS)</item>
+        <item>Title (CS)</item>
     </string-array>
 
     <string-array name="selection_mode">

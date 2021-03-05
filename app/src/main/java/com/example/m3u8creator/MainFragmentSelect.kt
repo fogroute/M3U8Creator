@@ -68,8 +68,16 @@ class MainFragmentSelect :Fragment() {
 
             }
             else{
-                var selectionArg = "*" + searchString + "*"
-                selectionArgs = arrayOf(selectionArg)
+                // GLOB (Case-Sensitive)
+                if (selectedItemPosition == Constant.SPINNER_PATH || selectedItemPosition == Constant.SPINNER_PATH) {
+                    var selectionArg = "*" + searchString + "*"
+                    selectionArgs = arrayOf(selectionArg)
+                }
+                // LIKE (Case-Insensitive)
+                if (selectedItemPosition == Constant.SPINNER_PATH_CI || selectedItemPosition == Constant.SPINNER_PATH_CI) {
+                    var selectionArg = "%" + searchString + "%"
+                    selectionArgs = arrayOf(selectionArg)
+                }
             }
 
             //Query
@@ -83,6 +91,14 @@ class MainFragmentSelect :Fragment() {
                 }
                 Constant.SPINNER_TITLE -> {
                     selectionClause = "${MediaStore.Audio.Media.TITLE} GLOB ?"
+                    sortOrder = MediaStore.Audio.Media.TITLE
+                }
+                Constant.SPINNER_PATH_CI -> {
+                    selectionClause = "${MediaStore.Audio.Media.DATA} LIKE ?"
+                    sortOrder = MediaStore.Audio.Media.DATA
+                }
+                Constant.SPINNER_TITLE_CI -> {
+                    selectionClause = "${MediaStore.Audio.Media.TITLE} LIKE ?"
                     sortOrder = MediaStore.Audio.Media.TITLE
 
                 }
