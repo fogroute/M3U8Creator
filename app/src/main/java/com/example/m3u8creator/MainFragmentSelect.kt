@@ -69,12 +69,12 @@ class MainFragmentSelect :Fragment() {
             }
             else{
                 // GLOB (Case-Sensitive)
-                if (selectedItemPosition == Constant.SPINNER_PATH || selectedItemPosition == Constant.SPINNER_PATH) {
+                if (selectedItemPosition == Constant.SPINNER_PATH || selectedItemPosition == Constant.SPINNER_TITLE) {
                     var selectionArg = "*" + searchString + "*"
                     selectionArgs = arrayOf(selectionArg)
                 }
                 // LIKE (Case-Insensitive)
-                if (selectedItemPosition == Constant.SPINNER_PATH_CI || selectedItemPosition == Constant.SPINNER_PATH_CI) {
+                if (selectedItemPosition == Constant.SPINNER_PATH_CI || selectedItemPosition == Constant.SPINNER_TITLE_CI) {
                     var selectionArg = "%" + searchString + "%"
                     selectionArgs = arrayOf(selectionArg)
                 }
