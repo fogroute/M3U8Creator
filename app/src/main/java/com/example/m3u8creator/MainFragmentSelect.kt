@@ -163,17 +163,6 @@ class MainFragmentSelect :Fragment() {
 
         }
 
-/*
-        dataset.add("A", "/storage/a", false, false) //dummy
-        dataset.add("B", "/storage/b", false, false) //dummy
-        dataset.add("C", "/storage/c", false, false) //dummy
-        dataset.add("D", "/storage/d", false, false) //dummy
-        dataset.add("E", "/storage/e", false, false) //dummy
-        dataset.add("F", "/storage/f", false, false) //dummy
-        dataset.add("G", "/storage/g", false, false) //dummy
-        dataset.add("H", "/storage/h", false, false) //dummy
-*/
-
         val layoutManager = LinearLayoutManager(activity)
 
         simpleRecyclerView.layoutManager = layoutManager
@@ -197,6 +186,8 @@ class MainFragmentSelect :Fragment() {
                 }
 
 //                Toast.makeText(context, "selectedItemPosition = ${selectedItemPosition}", Toast.LENGTH_SHORT).show()
+                val count0 = dataset.count
+                val size0  = dataset.size
 
                 when(selectedItemPosition) {
                     Constant.SPINNER_REDUCE -> {
@@ -218,7 +209,8 @@ class MainFragmentSelect :Fragment() {
                     }
                 }
                 adapter.notifyDataSetChanged()
-                toastSelectStatus(dataset.count, dataset.size)
+//              toastSelectStatus(dataset.count, dataset.size)
+                toastSelectStatus(count0, size0, dataset.count, dataset.size)
             }
         })
         buttonC?.setOnLongClickListener(object : View.OnLongClickListener{
@@ -533,6 +525,9 @@ class MainFragmentSelect :Fragment() {
 
     private fun toastSelectStatus(count: Int, size: Int){
         Toast.makeText(activity, "${count}/${size}", Toast.LENGTH_SHORT).show()
+    }
+    private fun toastSelectStatus(count0: Int, size0: Int, count1: Int, size1: Int){
+        Toast.makeText(activity, "${count0}/${size0} -> ${count1}/${size1} ", Toast.LENGTH_SHORT).show()
     }
 }
 
