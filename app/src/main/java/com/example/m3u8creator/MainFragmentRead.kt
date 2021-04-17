@@ -31,6 +31,7 @@ class MainFragmentRead : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerSearch?.adapter = adapter
         }
+        spinnerSearch?.setSelection(Constant.SPINNER_PATH_CI)
 
         val spinnerSelect = activity?.findViewById<Spinner>(R.id.spinnerSelect)
         ArrayAdapter.createFromResource(

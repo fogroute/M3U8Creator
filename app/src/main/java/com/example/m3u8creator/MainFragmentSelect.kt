@@ -55,7 +55,8 @@ class MainFragmentSelect :Fragment() {
             //
             val mProjection : Array<String> = arrayOf(
                 MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.DATA
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.YEAR
             )
             val textInputEditText = activity?.findViewById<TextInputEditText>(R.id.textInputEditText)
             var searchString = textInputEditText?.text.toString()
@@ -69,15 +70,16 @@ class MainFragmentSelect :Fragment() {
             }
             else{
                 // GLOB (Case-Sensitive)
+                /*
                 if (selectedItemPosition == Constant.SPINNER_PATH || selectedItemPosition == Constant.SPINNER_TITLE) {
                     var selectionArg = "*" + searchString + "*"
                     selectionArgs = arrayOf(selectionArg)
                 }
+                */
                 // LIKE (Case-Insensitive)
-                if (selectedItemPosition == Constant.SPINNER_PATH_CI || selectedItemPosition == Constant.SPINNER_TITLE_CI) {
-                    var selectionArg = "%" + searchString + "%"
-                    selectionArgs = arrayOf(selectionArg)
-                }
+                var selectionArg = "%" + searchString + "%"
+                selectionArgs = arrayOf(selectionArg)
+
             }
 
             //Query
@@ -85,6 +87,7 @@ class MainFragmentSelect :Fragment() {
             var selectionClause: String? = null
 
             when (selectedItemPosition){
+                /*
                 Constant.SPINNER_PATH -> {
                     selectionClause = "${MediaStore.Audio.Media.DATA} GLOB ?"
                     sortOrder = MediaStore.Audio.Media.DATA
@@ -93,6 +96,7 @@ class MainFragmentSelect :Fragment() {
                     selectionClause = "${MediaStore.Audio.Media.TITLE} GLOB ?"
                     sortOrder = MediaStore.Audio.Media.TITLE
                 }
+                */
                 Constant.SPINNER_PATH_CI -> {
                     selectionClause = "${MediaStore.Audio.Media.DATA} LIKE ?"
                     sortOrder = MediaStore.Audio.Media.DATA
@@ -100,8 +104,24 @@ class MainFragmentSelect :Fragment() {
                 Constant.SPINNER_TITLE_CI -> {
                     selectionClause = "${MediaStore.Audio.Media.TITLE} LIKE ?"
                     sortOrder = MediaStore.Audio.Media.TITLE
-
                 }
+                Constant.SPINNER_ALBUM -> {
+                    selectionClause = "${MediaStore.Audio.Media.ALBUM} LIKE ?"
+                    sortOrder = MediaStore.Audio.Media.ALBUM
+                }
+                Constant.SPINNER_ARTIST -> {
+                    selectionClause = "${MediaStore.Audio.Media.ARTIST} LIKE ?"
+                    sortOrder = MediaStore.Audio.Media.ARTIST
+                }
+                Constant.SPINNER_COMPOSER -> {
+                    selectionClause = "${MediaStore.Audio.Media.COMPOSER} LIKE ?"
+                    sortOrder = MediaStore.Audio.Media.COMPOSER
+                }
+                Constant.SPINNER_YEAR -> {
+                    selectionClause = "${MediaStore.Audio.Media.YEAR} LIKE ?"
+                    sortOrder = MediaStore.Audio.Media.YEAR
+                }
+
             }
 
             val cursor = this.context?.contentResolver?.query(
