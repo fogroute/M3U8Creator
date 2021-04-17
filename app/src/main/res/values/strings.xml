@@ -19,10 +19,12 @@
     <string name="tab_Select">List</string>
 
     <string-array name="search_mode">
+        <item>Album</item>
+        <item>Artist</item>
+        <item>Composer</item>
         <item>Path</item>
         <item>Title</item>
-        <item>Path (CS)</item>
-        <item>Title (CS)</item>
+        <item>Year</item>
     </string-array>
 
     <string-array name="selection_mode">
